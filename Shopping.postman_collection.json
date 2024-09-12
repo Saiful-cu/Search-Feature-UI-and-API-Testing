@@ -1,0 +1,265 @@
+{
+	"info": {
+		"_postman_id": "cbdd348e-b6ee-4ac7-a44b-9edc2dcf618d",
+		"name": "Shopping",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37846478"
+	},
+	"item": [
+		{
+			"name": "Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}",
+					"host": [
+						"{{BaseUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/search?keyword=Nike react phantom run flyknit 2",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "Nike react phantom run flyknit 2"
+						},
+						{
+							"key": "id",
+							"value": "178",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/men/nike-react-phantom-run-flyknit-2-182?size=25&color=14",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"men",
+						"nike-react-phantom-run-flyknit-2-182"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "25"
+						},
+						{
+							"key": "color",
+							"value": "14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add product to cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"let cart_id = response.data.item.uuid;",
+							"",
+							"pm.collectionVariables.set(\"cart_id\", cart_id);",
+							"",
+							"//console.log(cart_id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Nike react phantom run flyknit 2\",\n    \"sku\": \"NJC48508-Black-S\",\n    \"qty\" :2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/api/cart/mine/items",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"api",
+						"cart",
+						"mine",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/cart?id={{cart_id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"cart"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{cart_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "checkout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/checkout?cart={{cart_id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"checkout"
+					],
+					"query": [
+						{
+							"key": "cart",
+							"value": "{{cart_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://demo.evershop.io"
+		},
+		{
+			"key": "cart_id",
+			"value": ""
+		}
+	]
+}
